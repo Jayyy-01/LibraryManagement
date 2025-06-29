@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+</head>
+<body>
+<form method="POST">
+    {% csrf_token %}     <!-- this token is for security purpose and if we doesnt give, it throws error, Cross Site Request Forgery (CSRF)-->
+    <label for="Author">Author: </label>
+    <input type="text" id="Author" name="Author" value="{{ auth.Author }}">
+    <br><br>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
