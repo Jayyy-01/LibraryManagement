@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Author and Book Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Author and Book Store</h1>
+
+  <nav>
+    {% if request.user.is_superuser %}
+    <a href="{% url 'auth_entry' %}">Add Author</a> |
+    <a href="{% url 'book_entry' %}">Add Book</a>
+    {% endif %}
+    <a href="{% url 'logout' %}">Logout</a>
+  </nav>
+
+  <br><br>
+
+  <h2>Authors</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Author</th>
+        {% if request.user.is_superuser %}
+        <th>Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in aut %}
+      <tr>
+        <td>{{ a.auth_name }}</td>
+        {% if request.user.is_superuser %}
+        <td>
+          <a href="{% url 'edit_author' a.id %}">Edit</a> |
+          <a href="{% url 'delete_author' a.id %}">Delete</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2">No authors found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <br><br>
+
+  <h2>Books</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Book</th>
+        <th>Price</th>
+        {% if request.user.is_superuser %}
+        <th>Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in boo %}
+      <tr>
+        <td>{{ i.author.auth_name }}</td>
+        <td>{{ i.book_name }}</td>
+        <td>{{ i.book_price }}</td>
+        {% if request.user.is_superuser %}
+        <td>
+          <a href="{% url 'edit_book' i.id %}">Edit</a> |
+          <a href="{% url 'delete_book' i.id %}">Delete</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No books found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</body>
+</html>
